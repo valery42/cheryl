@@ -35,5 +35,6 @@ class Engine:
             self.sorted_by[key] = True
     
     def find_book(self, *, key, target):
+        self.sort_books(key=key)
         index = binary_search(self.books, key=key, target=target)
         return index

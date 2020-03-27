@@ -30,3 +30,9 @@ class TestEngine:
         engine.sort_books(key="pages")
         assert engine.books == sorted(get_books(), key=lambda book: book["pages"])
         assert engine.sorted_by["pages"] == True
+    
+    def test_find_book(self):
+        engine = Engine("")
+        engine.books = get_books()
+        index = engine.find_book(key="isbn", target="222-333-111")
+        assert index == 1
