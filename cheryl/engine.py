@@ -1,10 +1,12 @@
 from cheryl.converters import record_to_book, book_to_record
+from cheryl.utils import get_sorted_by
 
 
 class Engine:
     def __init__(self, db_name):
         self.books = []
         self.db_name = db_name
+        self.sorted_by = get_sorted_by()
     
     def load_database(self):
         with open(self.db_name, "rt") as db:
