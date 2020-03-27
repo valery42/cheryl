@@ -1,5 +1,6 @@
 from cheryl.converters import record_to_book, book_to_record
 from cheryl.utils import get_sorted_by
+from cheryl.sort import heapsort
 
 
 class Engine:
@@ -26,3 +27,8 @@ class Engine:
     def delete_book(self, *, index):
         del self.books[index]
     
+    def sort_books(self, *, key):
+        if not self.sorted_by[key]:
+            heapsort(self.books, key=key)
+            self.sorted_by = get_sorted_by()
+            self.sorted_by[key] = True

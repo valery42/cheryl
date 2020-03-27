@@ -14,7 +14,6 @@ class TestEngine:
         assert engine.books == get_books()
         delete_database(db_name)
     
-
     def test_store_database(self):
         db_name = "test_database"
         engine = Engine(db_name)
@@ -24,3 +23,10 @@ class TestEngine:
             records = [record.strip() for record in db]
         assert records == get_records()
         delete_database(db_name)
+    
+    def test_sort_books(self):
+        engine = Engine("")
+        engine.books = get_books()
+        engine.sort_books(key="pages")
+        assert engine.books == sorted(get_books(), key=lambda book: book["pages"])
+        assert engine.sorted_by["pages"] == True
