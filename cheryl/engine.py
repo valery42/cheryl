@@ -1,6 +1,7 @@
 from cheryl.converters import record_to_book, book_to_record
 from cheryl.utils import get_sorted_by
 from cheryl.sort import heapsort
+from cheryl.search import binary_search
 
 
 class Engine:
@@ -32,3 +33,7 @@ class Engine:
             heapsort(self.books, key=key)
             self.sorted_by = get_sorted_by()
             self.sorted_by[key] = True
+    
+    def find_book(self, *, key, target):
+        index = binary_search(self.books, key=key, target=target)
+        return index
