@@ -38,7 +38,7 @@ def get_from_user(*, message, gaps=0, lower=True):
 def get_book_attr(*, attr, error, checker=None):
     message = attr
     while True:
-        attr = get_from_user(message=message, gaps=1)
+        attr = get_from_user(message=message, gaps=1, lower=False)
         if checker:
             if checker(attr):
                 break
