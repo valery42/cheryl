@@ -1,4 +1,7 @@
-from cheryl.utils import get_from_user, create_book
+from cheryl.utils import get_from_user, create_book, print_books
+from cheryl.utils import (
+    get_from_user, create_book, print_books, there_is_nothing_to,
+)
 from cheryl.config import (
     CHERYL,
 
@@ -35,7 +38,13 @@ class Handler:
             else:
                 print(f"Undefined key '{key}'. Key must be in {SORT_KEYS}")
         else:
-            print("There is nothing to sort yet")
+            there_is_nothing_to("sort")
+    
+    def handle_print(self):
+        if self.engine.books:
+            print_books(self.engine)
+        else:
+            there_is_nothing_to("print")
     
     def handle_quit(self):
             self.engine.store_database()
@@ -44,13 +53,15 @@ class Handler:
     def handle(self):
         while True:
             command = get_from_user(message=CHERYL)
-            command = command.lower()
 
             if command in ADD_SYNONYMS:
                 self.handle_add()
             
             elif command in SORT_SYNONYMS:
                 self.handle_sort()
+            
+            elif command in PRINT_SYNONYMS:
+                self.handle_print()
             
             elif command in QUIT_SYNONYMS:
                 self.handle_quit()

@@ -61,6 +61,10 @@ def get_book_attr(*, attr, error, checker=None):
     return attr
 
 
+def there_is_nothing_to(do):
+    return f"There is nothing to {do} yet"
+
+
 def cannot_be_empty(attr, *, gaps=2):
     return f"{gaps*GAP}{attr} cannot be empty"
 
@@ -103,3 +107,8 @@ def print_book(engine, book):
         book["publisher"], engine.longest["publisher"] + SPACE_AROUND,
         book["pages"], PAGES_LENGTH + SPACE_AROUND,
     ))
+
+
+def print_books(engine):
+    for book in engine.books:
+        print_book(engine, book)
