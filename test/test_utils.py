@@ -1,4 +1,13 @@
-from cheryl.utils import quote, unquote, get_prompt, cannot_be_empty
+import io
+from contextlib import redirect_stdout
+
+from cheryl.engine import Engine
+from test.helpers import get_book
+from cheryl.utils import (
+    quote, unquote,
+    get_prompt, cannot_be_empty,
+    print_book,
+)
 
 
 def test_quote():
@@ -18,3 +27,14 @@ def test_get_prompt():
 
 def test_cannot_be_empty():
     assert cannot_be_empty("value", gaps=1) == "    value cannot be empty"
+
+
+def test_print_book():
+    engine = Engine("")
+    book = get_book()
+    attrs = [" " + str(attr) + " " for attr in book.values()]
+    engine.add_book(book)
+    with io.StringIO() as handle:
+        with redirect_stdout(handle):
+            print_book(engine, book)
+            assert handle.getvalue() == "|" + "|".join(attrs) + " |\n"
