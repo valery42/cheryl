@@ -1,4 +1,4 @@
-from cheryl.utils import get_from_user
+from cheryl.utils import get_from_user, create_book
 from cheryl.config import (
     CHERYL,
 
@@ -18,6 +18,13 @@ class Handler:
     def __init__(self, engine):
         self.engine = engine
     
+    def handle_add(self):
+        book = create_book()
+        title = book["title"]
+        author = book["author"]
+        self.engine.add_book(book)
+        print(f"'{title}' by {author} has been successfully added")
+    
     def handle_sort(self):
         if self.engine.books:
             key = get_from_user(message="by", gaps=1)
@@ -34,5 +41,8 @@ class Handler:
             command = get_from_user(message=CHERYL)
             command = command.lower()
 
-            if command in SORT_SYNONYMS:
+            if command in ADD_SYNONYMS:
+                self.handle_add()
+            
+            elif command in SORT_SYNONYMS:
                 self.handle_sort()
