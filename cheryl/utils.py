@@ -21,6 +21,15 @@ def get_sorted_by():
     return sorted_by
 
 
+def get_longest():
+    longest = {
+        "title": 0,
+        "author": 0,
+        "publisher": 0,
+    }
+    return longest
+
+
 def get_prompt(*, message, gaps=0):
     return f"{gaps*GAP}{message}{ARROW}"
 

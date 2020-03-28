@@ -1,7 +1,7 @@
 from cheryl.engine import Engine
 from test.helpers import (
     create_database, delete_database,
-    get_records, get_books,
+    get_records, get_books, get_book,
 )
 
 
@@ -36,3 +36,13 @@ class TestEngine:
         engine.books = get_books()
         index = engine.find_book(key="isbn", target="222-333-111")
         assert index == 1
+    
+    def test_update_longest(self):
+        engine = Engine("")
+        book = get_book()
+        engine.add_book(book)
+        assert engine.longest == {
+            "title": len(book["title"]),
+            "author": len(book["author"]),
+            "publisher": len(book["publisher"]),
+        }
