@@ -6,3 +6,17 @@ MAX_PAGES = 9999
 ISBN_SEP = "-"
 ISBN_NUM_VALUES = 3
 ISBN_VALUE_LENGTH = 3
+
+GAP = 4 * " "
+ARROW = "> "
+CHERYL = "cheryl"
+
+SORT_KEYS = ("isbn", "title", "author", "publisher", "pages")
+
+ADD_SYNONYMS = ("add", "create", "new")
+HELP_SYNONYMS = (".help", "help")
+SORT_SYNONYMS = ("sort", "order")
+PRINT_SYNONYMS = ("print", "display", "list")
+FIND_SYNONYMS = ("find", "search", "get")
+DELETE_SYNONYMS = ("delete", "del", "remove", "rm")
+CHANGE_SYNONYMS = ("change", "update", "set")
