@@ -16,9 +16,8 @@ class Engine:
             self.longest[attr] = len(book[attr])
     
     def update_longest(self, book):
-        self.update_longest_attr(book, attr="title")
-        self.update_longest_attr(book, attr="author")
-        self.update_longest_attr(book, attr="publisher")
+        for attr in ("title", "author", "publisher"):
+            self.update_longest_attr(book, attr=attr)
     
     def load_database(self):
         with open(self.db_name, "rt") as db:
