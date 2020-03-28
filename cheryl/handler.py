@@ -11,6 +11,7 @@ from cheryl.config import (
     FIND_SYNONYMS,
     DELETE_SYNONYMS,
     CHANGE_SYNONYMS,
+    QUIT_SYNONYMS,
 )
 
 
@@ -36,6 +37,10 @@ class Handler:
         else:
             print("There is nothing to sort yet")
     
+    def handle_quit(self):
+            self.engine.store_database()
+            print("Bye.")
+    
     def handle(self):
         while True:
             command = get_from_user(message=CHERYL)
@@ -46,3 +51,11 @@ class Handler:
             
             elif command in SORT_SYNONYMS:
                 self.handle_sort()
+            
+            elif command in QUIT_SYNONYMS:
+                self.handle_quit()
+                break
+            
+            else:
+                print(f"There is no such command '{command}'. "
+                      "Please, try again.")
