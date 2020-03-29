@@ -17,6 +17,7 @@ ARROW = "> "
 CHERYL = "cheryl"
 
 SORT_KEYS = ("isbn", "title", "author", "publisher", "pages")
+FIND_KEYS = ("isbn", "title")
 
 ADD_SYNONYMS = ("add", "create", "new")
 HELP_SYNONYMS = (".help", "help")
