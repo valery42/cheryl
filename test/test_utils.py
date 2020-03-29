@@ -5,7 +5,7 @@ from cheryl.engine import Engine
 from test.helpers import get_book
 from cheryl.utils import (
     quote, unquote,
-    get_prompt, cannot_be_empty,
+    get_prompt, get_empty_attr_error,
     print_book,
 )
 
@@ -25,8 +25,8 @@ def test_get_prompt():
     assert prompt == "    hello> "
 
 
-def test_cannot_be_empty():
-    assert cannot_be_empty("value", gaps=1) == "    value cannot be empty"
+def test_get_empty_attr_error():
+    assert get_empty_attr_error("value", gaps=1) == "    value cannot be empty"
 
 
 def test_print_book():
