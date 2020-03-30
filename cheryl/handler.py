@@ -62,25 +62,35 @@ class Handler:
             error(*args)
             return False
     
+    def correct_key_and_target(self, key, target):
+        if key == "isbn" and not is_correct_isbn(target):
+            print(get_isbn_error())
+            return False
+        elif not target:
+            print(get_empty_attr_error(key))
+            return False
+        return True
+
+    def print_book(self, *, index):
+        print_book(self.engine, self.engine.books[index])
+    
     def handle_find(self):
-        if self.engine.books:
+        continue_ = self.continue_on_condition(self.engine.books, None,
+                                               there_is_nothing_to, "find")
+        if continue_:
             key = get_from_user(message="by", gaps=1)
-            if key in FIND_KEYS:
+            condition = key in FIND_KEYS
+            continue_ = self.continue_on_condition(condition, None,
+                                                   key_must_be_in, FIND_KEYS)
+            if continue_:
                 target = get_from_user(message=f"{key}", gaps=1, lower=False)
-                if key == "isbn" and not is_correct_isbn(target):
-                    print(get_isbn_error())
-                elif not target:
-                    print(get_empty_attr_error(key))
-                else:
+                if self.correct_key_and_target(key, target):
                     index = self.engine.find_book(key=key, target=target)
-                    if index != UNSUCCESSFUL:
-                        print_book(self.engine, self.engine.books[index])
-                    else:
-                        cannot_perform_action("find", key, target)
-            else:
-                key_must_be_in(FIND_KEYS)
-        else:
-            there_is_nothing_to("find")
+                    condition = index != UNSUCCESSFUL
+                    self.continue_on_condition(
+                        condition, self.print_book, cannot_perform_action,
+                        "find", key, target, index=index,
+                    )
     
     def handle_quit(self):
         self.engine.store_database()
