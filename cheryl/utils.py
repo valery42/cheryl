@@ -106,7 +106,7 @@ def create_book():
     book["author"] = author
     book["publisher"] = publisher
     book["pages"] = int(pages)
-    return book
+    return book, title, author
 
 
 def get_format_string():
