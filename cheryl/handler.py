@@ -92,6 +92,54 @@ class Handler:
                         "find", key, target, index=index,
                     )
     
+    def delete_book(self, *, index):
+        book = self.engine.books[index]
+        title, author = book["title"], book["author"]
+        print(f"'{title}' by {author} has been successfully deleted")
+        self.engine.delete_book(index=index)
+
+    def handle_delete(self):
+        continue_ = self.continue_on_condition(self.engine.books, None,
+                                               there_is_nothing_to, "delete")
+        if continue_:
+            key = get_from_user(message="by", gaps=1)
+            condition = key in FIND_KEYS
+            continue_ = self.continue_on_condition(condition, None,
+                                                   key_must_be_in, FIND_KEYS)
+            if continue_:
+                target = get_from_user(message=f"{key}", gaps=1, lower=False)
+                if self.correct_key_and_target(key, target):
+                    index = self.engine.find_book(key=key, target=target)
+                    condition = index != UNSUCCESSFUL
+                    self.continue_on_condition(
+                        condition, self.delete_book, cannot_perform_action,
+                        "find", key, target, index=index,
+                    )
+    
+    def handle_change(self):
+        continue_ = self.continue_on_condition(self.engine.books, None,
+                                               there_is_nothing_to, "change")
+        if continue_:
+            key = get_from_user(message="by", gaps=1)
+            condition = key in FIND_KEYS
+            continue_ = self.continue_on_condition(condition, None,
+                                                   key_must_be_in, FIND_KEYS)
+            if continue_:
+                target = get_from_user(message=f"{key}", gaps=1, lower=False)
+                if self.correct_key_and_target(key, target):
+                    index = self.engine.find_book(key=key, target=target)
+                    condition = index != UNSUCCESSFUL
+                    self.continue_on_condition(
+                        condition, self.change_book, cannot_perform_action,
+                        "find", key, target, key=key, index=index,
+                    )
+    
+    def change_book(self, *, key, index):
+        value = get_from_user(message=f"new {key}", gaps=1, lower=False)
+        if self.correct_key_and_target(key, value):
+            self.engine.books[index][key] = value
+            print(f"{key} has been successfully changed to '{value}'")
+
     def handle_quit(self):
         self.engine.store_database()
         print("Bye.")
@@ -112,6 +160,12 @@ class Handler:
             elif command in FIND_SYNONYMS:
                 self.handle_find()
             
+            elif command in DELETE_SYNONYMS:
+                self.handle_delete()
+            
+            elif command in CHANGE_SYNONYMS:
+                self.handle_change()
+
             elif command in QUIT_SYNONYMS:
                 self.handle_quit()
                 break
