@@ -33,22 +33,34 @@ class Handler:
         self.engine.add_book(book)
         print(f"'{title}' by {author} has been successfully added")
     
+    def sort_books(self, *, key):
+        self.engine.sort_books(key=key)
+        print(f"Books have been sorted by {key}")
+    
     def handle_sort(self):
-        if self.engine.books:
+        continue_ = self.continue_on_condition(self.engine.books, None,
+                                               there_is_nothing_to, "sort")
+        if continue_:
             key = get_from_user(message="by", gaps=1)
-            if key in SORT_KEYS:
-                self.engine.sort_books(key=key)
-                print(f"Books have been sorted by {key}")
-            else:
-                key_must_be_in(SORT_KEYS)
-        else:
-            there_is_nothing_to("sort")
+            condition = key in SORT_KEYS
+            self.continue_on_condition(condition, self.sort_books,
+                                       key_must_be_in, SORT_KEYS, key=key)
+    
+    def print_books(self):
+        print_books(self.engine)
     
     def handle_print(self):
-        if self.engine.books:
-            print_books(self.engine)
+        self.continue_on_condition(self.engine.books, self.print_books,
+                                   there_is_nothing_to, "print")
+       
+    def continue_on_condition(self, condition, action, error, *args, **kwargs):
+        if condition:
+            if action:
+                action(**kwargs)
+            return True
         else:
-            there_is_nothing_to("print")
+            error(*args)
+            return False
     
     def handle_find(self):
         if self.engine.books:
