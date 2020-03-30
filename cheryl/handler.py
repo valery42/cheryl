@@ -1,9 +1,9 @@
-from cheryl.checkers import is_correct_isbn
+from cheryl.checkers import is_correct_isbn, is_correct_pages
 from cheryl.utils import (
     get_from_user, create_book,
     print_book, print_books,
     there_is_nothing_to, key_must_be_in, cannot_perform_action,
-    get_isbn_error, get_empty_attr_error,
+    get_isbn_error, get_pages_error, get_empty_attr_error,
 )
 from cheryl.config import (
     CHERYL,
@@ -40,6 +40,9 @@ class Handler:
     def correct_key_and_target(self, key, target):
         if key == "isbn" and not is_correct_isbn(target):
             print(get_isbn_error())
+            return False
+        elif key == "pages" and not is_correct_pages(target):
+            print(get_pages_error())
             return False
         elif not target:
             print(get_empty_attr_error(key))
@@ -81,10 +84,17 @@ class Handler:
         self.engine.delete_book(index=index)
 
     def change_book(self, *, key, index):
-        value = get_from_user(message=f"new {key}", gaps=1, lower=False)
-        if self.correct_key_and_target(key, value):
-            self.engine.books[index][key] = value
-            print(f"{key} has been successfully changed to '{value}'")
+        key = get_from_user(message="change key", gaps=1)
+        condition = key in SORT_KEYS
+        continue_ = self.continue_on_condition(condition, None,
+                                                key_must_be_in, SORT_KEYS)
+        if continue_:
+            value = get_from_user(message=f"new {key}", gaps=1, lower=False)
+            if self.correct_key_and_target(key, value):
+                if key == "pages":
+                    value = int(value)
+                self.engine.books[index][key] = value
+                print(f"{key} has been successfully changed to '{value}'")
 
     def find_and_perform(self, action, verb):
         continue_ = self.continue_on_condition(self.engine.books, None,
