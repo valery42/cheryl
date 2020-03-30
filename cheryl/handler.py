@@ -28,6 +28,24 @@ class Handler:
     def __init__(self, engine):
         self.engine = engine
     
+    def continue_on_condition(self, condition, action, error, *args, **kwargs):
+        if condition:
+            if action:
+                action(**kwargs)
+            return True
+        else:
+            error(*args)
+            return False
+    
+    def correct_key_and_target(self, key, target):
+        if key == "isbn" and not is_correct_isbn(target):
+            print(get_isbn_error())
+            return False
+        elif not target:
+            print(get_empty_attr_error(key))
+            return False
+        return True
+    
     def handle_add(self):
         book, title, author = create_book()
         self.engine.add_book(book)
@@ -52,94 +70,49 @@ class Handler:
     def handle_print(self):
         self.continue_on_condition(self.engine.books, self.print_books,
                                    there_is_nothing_to, "print")
-       
-    def continue_on_condition(self, condition, action, error, *args, **kwargs):
-        if condition:
-            if action:
-                action(**kwargs)
-            return True
-        else:
-            error(*args)
-            return False
     
-    def correct_key_and_target(self, key, target):
-        if key == "isbn" and not is_correct_isbn(target):
-            print(get_isbn_error())
-            return False
-        elif not target:
-            print(get_empty_attr_error(key))
-            return False
-        return True
-
-    def print_book(self, *, index):
+    def print_book(self, *, key, index):
         print_book(self.engine, self.engine.books[index])
     
-    def handle_find(self):
-        continue_ = self.continue_on_condition(self.engine.books, None,
-                                               there_is_nothing_to, "find")
-        if continue_:
-            key = get_from_user(message="by", gaps=1)
-            condition = key in FIND_KEYS
-            continue_ = self.continue_on_condition(condition, None,
-                                                   key_must_be_in, FIND_KEYS)
-            if continue_:
-                target = get_from_user(message=f"{key}", gaps=1, lower=False)
-                if self.correct_key_and_target(key, target):
-                    index = self.engine.find_book(key=key, target=target)
-                    condition = index != UNSUCCESSFUL
-                    self.continue_on_condition(
-                        condition, self.print_book, cannot_perform_action,
-                        "find", key, target, index=index,
-                    )
-    
-    def delete_book(self, *, index):
+    def delete_book(self, *, key, index):
         book = self.engine.books[index]
         title, author = book["title"], book["author"]
         print(f"'{title}' by {author} has been successfully deleted")
         self.engine.delete_book(index=index)
 
-    def handle_delete(self):
-        continue_ = self.continue_on_condition(self.engine.books, None,
-                                               there_is_nothing_to, "delete")
-        if continue_:
-            key = get_from_user(message="by", gaps=1)
-            condition = key in FIND_KEYS
-            continue_ = self.continue_on_condition(condition, None,
-                                                   key_must_be_in, FIND_KEYS)
-            if continue_:
-                target = get_from_user(message=f"{key}", gaps=1, lower=False)
-                if self.correct_key_and_target(key, target):
-                    index = self.engine.find_book(key=key, target=target)
-                    condition = index != UNSUCCESSFUL
-                    self.continue_on_condition(
-                        condition, self.delete_book, cannot_perform_action,
-                        "find", key, target, index=index,
-                    )
-    
-    def handle_change(self):
-        continue_ = self.continue_on_condition(self.engine.books, None,
-                                               there_is_nothing_to, "change")
-        if continue_:
-            key = get_from_user(message="by", gaps=1)
-            condition = key in FIND_KEYS
-            continue_ = self.continue_on_condition(condition, None,
-                                                   key_must_be_in, FIND_KEYS)
-            if continue_:
-                target = get_from_user(message=f"{key}", gaps=1, lower=False)
-                if self.correct_key_and_target(key, target):
-                    index = self.engine.find_book(key=key, target=target)
-                    condition = index != UNSUCCESSFUL
-                    self.continue_on_condition(
-                        condition, self.change_book, cannot_perform_action,
-                        "find", key, target, key=key, index=index,
-                    )
-    
     def change_book(self, *, key, index):
         value = get_from_user(message=f"new {key}", gaps=1, lower=False)
         if self.correct_key_and_target(key, value):
             self.engine.books[index][key] = value
             print(f"{key} has been successfully changed to '{value}'")
 
+    def find_and_perform(self, action, verb):
+        continue_ = self.continue_on_condition(self.engine.books, None,
+                                               there_is_nothing_to, verb)
+        if continue_:
+            key = get_from_user(message="by", gaps=1)
+            condition = key in FIND_KEYS
+            continue_ = self.continue_on_condition(condition, None,
+                                                   key_must_be_in, FIND_KEYS)
+            if continue_:
+                target = get_from_user(message=f"{key}", gaps=1, lower=False)
+                if self.correct_key_and_target(key, target):
+                    index = self.engine.find_book(key=key, target=target)
+                    condition = index != UNSUCCESSFUL
+                    self.continue_on_condition(
+                        condition, action, cannot_perform_action,
+                        "find", key, target, key=key, index=index,
+                    )
+    
+    def handle_find(self):
+        self.find_and_perform(self.print_book, "find")
+
+    def handle_delete(self):
+        self.find_and_perform(self.delete_book, "delete")
+    
+    def handle_change(self):
+        self.find_and_perform(self.change_book, "change")
+    
     def handle_quit(self):
         self.engine.store_database()
         print("Bye.")
