@@ -73,8 +73,8 @@ class Handler:
             there_is_nothing_to("find")
     
     def handle_quit(self):
-            self.engine.store_database()
-            print("Bye.")
+        self.engine.store_database()
+        print("Bye.")
     
     def handle(self):
         while True:
