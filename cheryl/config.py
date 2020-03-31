@@ -16,6 +16,8 @@ GAP = 4 * " "
 ARROW = "> "
 CHERYL = "cheryl"
 
+FORMAT_STRING = "|{:^{}}|{:^{}}|{:^{}}|{:^{}}|{:^{}}|"
+
 SORT_KEYS = ("isbn", "title", "author", "publisher", "pages")
 FIND_KEYS = ("isbn", "title")
 

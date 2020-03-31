@@ -2,6 +2,7 @@ from cheryl.checkers import is_correct_isbn, is_correct_pages
 from cheryl.config import (
     GAP, ARROW, ISBN_PATTERN, MAX_PAGES,
     ISBN_LENGTH, PAGES_LENGTH, SPACE_AROUND,
+    FORMAT_STRING,
 )
 
 
@@ -107,14 +108,8 @@ def create_book():
     return book
 
 
-def get_format_string():
-    format_string = "|{:^{}}|{:^{}}|{:^{}}|{:^{}}|{:^{}}|"
-    return format_string
-
-
 def print_book(engine, book):
-    format_string = get_format_string()
-    print(format_string.format(
+    print(FORMAT_STRING.format(
         book["isbn"], ISBN_LENGTH + SPACE_AROUND,
         book["title"], engine.longest["title"] + SPACE_AROUND,
         book["author"], engine.longest["author"] + SPACE_AROUND,
