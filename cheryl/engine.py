@@ -27,7 +27,7 @@ class Engine:
             self.update_longest_attr(book, attr=attr)
     
     def load_database(self):
-        """Load database of record."""
+        """Load database of records."""
         try:
             with open(self.db_name, "rt") as db:
                 for record in db:
