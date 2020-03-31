@@ -4,7 +4,7 @@ from cheryl.utils import quote, unquote
 def record_to_book(record):
     book = {}
     record = record.strip()
-    record = [unquote(value) for value in record.split(",")]
+    record = [unquote(value) for value in record.split("','")]
     isbn, title, author, publisher, pages = record
     book["isbn"] = isbn
     book["title"] = title
