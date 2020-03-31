@@ -7,6 +7,7 @@ from cheryl.utils import (
 )
 from cheryl.config import (
     CHERYL,
+    GAP,
 
     SORT_KEYS,
     FIND_KEYS,
@@ -21,6 +22,8 @@ from cheryl.config import (
     DELETE_SYNONYMS,
     CHANGE_SYNONYMS,
     QUIT_SYNONYMS,
+
+    COMMAND_TO_DESCRIPTION,
 )
 
 
@@ -127,6 +130,10 @@ class Handler:
         self.engine.store_database()
         print("Bye.")
     
+    def handle_help(self):
+        for command, description in COMMAND_TO_DESCRIPTION.items():
+            print(f"{GAP}{command:10}{2*GAP}{description}")
+    
     def handle(self):
         while True:
             command = get_from_user(message=CHERYL)
@@ -148,6 +155,9 @@ class Handler:
             
             elif command in CHANGE_SYNONYMS:
                 self.handle_change()
+            
+            elif command in HELP_SYNONYMS:
+                self.handle_help()
 
             elif command in QUIT_SYNONYMS:
                 self.handle_quit()
