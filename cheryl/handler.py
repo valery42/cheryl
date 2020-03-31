@@ -134,7 +134,12 @@ class Handler:
         for command, description in COMMAND_TO_DESCRIPTION.items():
             print(f"{GAP}{command:10}{2*GAP}{description}")
     
+    def load_database(self):
+        self.engine.load_database()
+
     def handle(self):
+        self.load_database()
+        
         while True:
             command = get_from_user(message=CHERYL)
 
