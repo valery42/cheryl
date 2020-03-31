@@ -1,4 +1,8 @@
+"""This module contains heapsort algorithm implementation."""
+
+
 def max_heapify(books, key, i, heap_size):
+    """Maintain the max-heap property."""
     left = 2*i + 1
     right = 2*i + 2
     if left < heap_size and books[left][key] > books[i][key]:
@@ -13,11 +17,16 @@ def max_heapify(books, key, i, heap_size):
 
 
 def build_max_heap(books, *, key, heap_size):
+    """Produce a max-heap from an unordered list of books."""
     for i in reversed(range(len(books) // 2)):
         max_heapify(books, key, i, heap_size)
 
 
 def heapsort(books, *, key):
+    """Heapsort algorithm implementation for books.
+    
+    key must be valid book attribute.
+    """
     heap_size = len(books)
     build_max_heap(books, key=key, heap_size=heap_size)
     for i in reversed(range(1, len(books))):
