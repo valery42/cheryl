@@ -1,3 +1,5 @@
+"""This module contains a class that handles user commands."""
+
 from cheryl.checkers import is_correct_isbn, is_correct_pages
 from cheryl.utils import (
     get_from_user, create_book,
@@ -28,6 +30,8 @@ from cheryl.config import (
 
 
 class Handler:
+    """A class that handles user commands."""
+
     def __init__(self, engine):
         self.engine = engine
     
@@ -53,6 +57,7 @@ class Handler:
         return True
     
     def handle_add(self):
+        """Handle Engine add_book operation."""
         book = create_book()
         title = book["title"]
         author = book["author"]
@@ -60,10 +65,12 @@ class Handler:
         print(f"'{title}' by {author} has been successfully added")
     
     def sort_books(self, *, key):
+        """handle_sort helper."""
         self.engine.sort_books(key=key)
         print(f"Books have been sorted by {key}")
     
     def handle_sort(self):
+        """Handle Engine sort_books operation."""
         continue_ = self.continue_on_condition(self.engine.books, None,
                                                there_is_nothing_to, "sort")
         if continue_:
@@ -73,22 +80,27 @@ class Handler:
                                        key_must_be_in, SORT_KEYS, key=key)
     
     def print_books(self):
+        """handle_print helper."""
         print_books(self.engine)
     
     def handle_print(self):
+        """Handle utils print_books operation."""
         self.continue_on_condition(self.engine.books, self.print_books,
                                    there_is_nothing_to, "print")
     
     def print_book(self, *, index):
+        """handle_find helper."""
         print_book(self.engine, self.engine.books[index])
     
     def delete_book(self, *, index):
+        """handle_delete helper."""
         book = self.engine.books[index]
         title, author = book["title"], book["author"]
         print(f"'{title}' by {author} has been successfully deleted")
         self.engine.delete_book(index=index)
 
     def change_book(self, *, index):
+        """handle_change helper."""
         key = get_from_user(message="change attr", gaps=1)
         condition = key in SORT_KEYS
         continue_ = self.continue_on_condition(condition, None,
@@ -102,6 +114,7 @@ class Handler:
                 print(f"{key} has been successfully changed to '{value}'")
 
     def find_and_perform(self, action, verb):
+        """Operation used by handle_find, handle_delete, and handle_change."""
         continue_ = self.continue_on_condition(self.engine.books, None,
                                                there_is_nothing_to, verb)
         if continue_:
@@ -120,19 +133,24 @@ class Handler:
                     )
     
     def handle_find(self):
+        """Handle Engine find_book operation."""
         self.find_and_perform(self.print_book, "find")
 
     def handle_delete(self):
+        """Handle Engine delete_book operation."""
         self.find_and_perform(self.delete_book, "delete")
     
     def handle_change(self):
+        """Handle change_book operation."""
         self.find_and_perform(self.change_book, "change")
     
     def handle_quit(self):
+        """Handle quit operation."""
         self.engine.store_database()
         print("Bye.")
     
     def handle_help(self):
+        """Handle help operation."""
         for command, description in COMMAND_TO_DESCRIPTION.items():
             print(f"{GAP}{command:10}{2*GAP}{description}")
     
