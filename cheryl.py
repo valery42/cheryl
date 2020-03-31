@@ -1,1 +1,29 @@
-print("cheryl")
+#!/usr/bin/env python3
+
+import argparse
+
+from cheryl.engine import Engine
+from cheryl.handler import Handler
+from cheryl.config import NAME, VERSION
+
+parser = argparse.ArgumentParser(
+    description=f"{NAME} is a library information system"
+)
+parser.add_argument(
+    "-db", "--database",
+    help="database to load records from and store books to"
+)
+
+args = parser.parse_args()
+args.database = args.database or "my-books.csv"
+
+
+def main():
+    print(f"{NAME} version {VERSION}")
+    print("Enter '.help' for usage hints.")
+    engine = Engine(args.database)
+    handler = Handler(engine)
+    handler.handle()
+
+
+main()
