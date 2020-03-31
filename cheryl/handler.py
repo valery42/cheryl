@@ -79,17 +79,17 @@ class Handler:
         self.continue_on_condition(self.engine.books, self.print_books,
                                    there_is_nothing_to, "print")
     
-    def print_book(self, *, key, index):
+    def print_book(self, *, index):
         print_book(self.engine, self.engine.books[index])
     
-    def delete_book(self, *, key, index):
+    def delete_book(self, *, index):
         book = self.engine.books[index]
         title, author = book["title"], book["author"]
         print(f"'{title}' by {author} has been successfully deleted")
         self.engine.delete_book(index=index)
 
-    def change_book(self, *, key, index):
-        key = get_from_user(message="change key", gaps=1)
+    def change_book(self, *, index):
+        key = get_from_user(message="change attr", gaps=1)
         condition = key in SORT_KEYS
         continue_ = self.continue_on_condition(condition, None,
                                                 key_must_be_in, SORT_KEYS)
@@ -116,7 +116,7 @@ class Handler:
                     condition = index != UNSUCCESSFUL
                     self.continue_on_condition(
                         condition, action, cannot_perform_action,
-                        "find", key, target, key=key, index=index,
+                        "find", key, target, index=index,
                     )
     
     def handle_find(self):
