@@ -1,3 +1,5 @@
+"""This module contains constants for entire cheryl package."""
+
 UNSUCCESSFUL = -1
 
 MIN_PAGES = 1
