@@ -1,3 +1,5 @@
+"""This module contains various utility functions."""
+
 from cheryl.checkers import is_correct_isbn, is_correct_pages
 from cheryl.config import (
     GAP, ARROW, ISBN_PATTERN, MAX_PAGES,
@@ -6,15 +8,18 @@ from cheryl.config import (
 )
 
 
-def quote(item, *, quote_type="'"):
+def quote(item: str, *, quote_type: str = "'") -> str:
+    """Quote item with quote_type of quotes."""
     return f"{quote_type}{item}{quote_type}"
 
 
-def unquote(item, *, quote_type="'"):
+def unquote(item: str, *, quote_type: str = "'") -> str:
+    """Unquote item from quote_type of quotes."""
     return item.strip(quote_type)
 
 
-def get_sorted_by():
+def get_sorted_by() -> dict:
+    """Get sorted_by Engine attribute."""
     sorted_by = {
         "isbn": False,
         "title": False,
@@ -25,7 +30,8 @@ def get_sorted_by():
     return sorted_by
 
 
-def get_longest():
+def get_longest() -> dict:
+    """Get longest Engine attribute."""
     longest = {
         "title": 0,
         "author": 0,
@@ -34,11 +40,16 @@ def get_longest():
     return longest
 
 
-def get_prompt(*, message, gaps=0):
+def get_prompt(*, message: str, gaps=0) -> str:
+    """Get a new prompt string using given message."""
     return f"{gaps*GAP}{message}{ARROW}"
 
 
-def get_from_user(*, message, gaps=0, lower=True):
+def get_from_user(*, message: str, gaps=0, lower=True) -> str:
+    """Get value from user.
+
+    Set lower to False if needed.
+    """
     prompt = get_prompt(message=message, gaps=gaps)
     value = input(prompt)
     value = value.strip()
@@ -48,14 +59,19 @@ def get_from_user(*, message, gaps=0, lower=True):
         return value
 
 
-def is_correct(value, *, checker=None):
+def is_correct(value, *, checker=None) -> bool:
+    """Check if value is correct using checker function."""
     if checker:
         return checker(value)
     else:
         return bool(value)
 
 
-def get_book_attr(*, attr, error, checker=None):
+def get_book_attr(*, attr: str, error: str, checker=None) -> str:
+    """Get book attribute from user.
+
+    checker function is used to check attribute for correctness.
+    """
     message = attr
     while True:
         attr = get_from_user(message=message, gaps=1, lower=False)
@@ -67,30 +83,37 @@ def get_book_attr(*, attr, error, checker=None):
 
 
 def there_is_nothing_to(do):
+    """Inform user that there are no books."""
     print(f"There is nothing to {do} yet")
 
 
 def key_must_be_in(keys):
+    """Inform user that key must be in keys."""
     print(f"Key must be in {keys}")
 
 
 def cannot_perform_action(action, key, target):
+    """Inform user that the program cannot perform action."""
     print(f"Cannot {action} a book with {key} '{target}'")
 
 
-def get_empty_attr_error(attr, *, gaps=0):
+def get_empty_attr_error(attr, *, gaps=0) -> str:
+    """Return empty attribute error."""
     return f"{gaps*GAP}{attr} cannot be empty"
 
 
-def get_isbn_error(*, gaps=0):
+def get_isbn_error(*, gaps=0) -> str:
+    """Return isbn error."""
     return f"{gaps*GAP}isbn must be like '{ISBN_PATTERN}' where 'd' is digit"
 
 
-def get_pages_error(*, gaps=0):
+def get_pages_error(*, gaps=0) -> str:
+    """Return pages error."""
     return f"{gaps*GAP}pages must be positive integer less than {MAX_PAGES+1}"
 
 
 def create_book():
+    """Create a new book."""
     book = {}
     book["isbn"] = get_book_attr(attr="isbn", error=get_isbn_error(gaps=2),
                                  checker=is_correct_isbn)
@@ -109,6 +132,7 @@ def create_book():
 
 
 def print_book(engine, book):
+    """Print book using FORMAT_STRING."""
     print(FORMAT_STRING.format(
         book["isbn"], ISBN_LENGTH + SPACE_AROUND,
         book["title"], engine.longest["title"] + SPACE_AROUND,
@@ -119,5 +143,6 @@ def print_book(engine, book):
 
 
 def print_books(engine):
+    """Print all books."""
     for book in engine.books:
         print_book(engine, book)
