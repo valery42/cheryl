@@ -38,3 +38,6 @@ COMMAND_TO_DESCRIPTION = {
     "quit": "Exit program",
     "help": "Print information about commands",
 }
+
+NAME = "Cheryl"
+VERSION = "0.1"
