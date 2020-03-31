@@ -20,10 +20,13 @@ class Engine:
             self.update_longest_attr(book, attr=attr)
     
     def load_database(self):
-        with open(self.db_name, "rt") as db:
-            for record in db:
-                book = record_to_book(record)
-                self.add_book(book)
+        try:
+            with open(self.db_name, "rt") as db:
+                for record in db:
+                    book = record_to_book(record)
+                    self.add_book(book)
+        except FileNotFoundError:
+            pass
     
     def store_database(self):
         with open(self.db_name, "wt") as db:
