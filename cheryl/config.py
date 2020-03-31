@@ -27,3 +27,14 @@ FIND_SYNONYMS = ("find", "search", "get")
 DELETE_SYNONYMS = ("delete", "del", "remove", "rm")
 CHANGE_SYNONYMS = ("change", "update", "set")
 QUIT_SYNONYMS = ("quit", "exit")
+
+COMMAND_TO_DESCRIPTION = {
+    "print": "Print stored books",
+    "sort": "Sort books by key",
+    "find": "Find a book by key",
+    "add": "Add a new book",
+    "delete": "Delete a book by key",
+    "change": "Change book attribute by key",
+    "quit": "Exit program",
+    "help": "Print information about commands",
+}
