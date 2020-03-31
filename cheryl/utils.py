@@ -51,7 +51,7 @@ def is_correct(value, *, checker=None):
     if checker:
         return checker(value)
     else:
-        return True if value else False
+        return bool(value)
 
 
 def get_book_attr(*, attr, error, checker=None):
