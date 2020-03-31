@@ -18,6 +18,8 @@ CHERYL = "cheryl"
 
 FORMAT_STRING = "|{:^{}}|{:^{}}|{:^{}}|{:^{}}|{:^{}}|"
 
+VAR_LEN_ATTRS = ("title", "author", "publisher")
+
 SORT_KEYS = ("isbn", "title", "author", "publisher", "pages")
 FIND_KEYS = ("isbn", "title")
 

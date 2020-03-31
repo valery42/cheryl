@@ -2,6 +2,7 @@ from cheryl.converters import record_to_book, book_to_record
 from cheryl.utils import get_sorted_by, get_longest
 from cheryl.sort import heapsort
 from cheryl.search import binary_search
+from cheryl.config import VAR_LEN_ATTRS
 
 
 class Engine:
@@ -16,7 +17,7 @@ class Engine:
             self.longest[attr] = len(book[attr])
     
     def update_longest(self, book):
-        for attr in ("title", "author", "publisher"):
+        for attr in VAR_LEN_ATTRS:
             self.update_longest_attr(book, attr=attr)
     
     def load_database(self):
