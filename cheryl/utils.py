@@ -91,22 +91,20 @@ def get_pages_error(*, gaps=0):
 
 def create_book():
     book = {}
-    isbn = get_book_attr(attr="isbn", error=get_isbn_error(gaps=2),
-                         checker=is_correct_isbn)
-    title = get_book_attr(attr="title",
-                          error=get_empty_attr_error("title", gaps=2))
-    author = get_book_attr(attr="author",
-                           error=get_empty_attr_error("author", gaps=2))
-    publisher = get_book_attr(attr="publisher",
-                              error=get_empty_attr_error("publisher", gaps=2))
-    pages = get_book_attr(attr="pages", error=get_pages_error(gaps=2),
-                          checker=is_correct_pages)
-    book["isbn"] = isbn
-    book["title"] = title
-    book["author"] = author
-    book["publisher"] = publisher
-    book["pages"] = int(pages)
-    return book, title, author
+    book["isbn"] = get_book_attr(attr="isbn", error=get_isbn_error(gaps=2),
+                                 checker=is_correct_isbn)
+    book["title"] = get_book_attr(attr="title",
+                                  error=get_empty_attr_error("title", gaps=2))
+    book["author"] = get_book_attr(
+        attr="author",
+        error=get_empty_attr_error("author", gaps=2))
+    book["publisher"] = get_book_attr(
+        attr="publisher",
+        error=get_empty_attr_error("publisher", gaps=2))
+    book["pages"] = int(get_book_attr(attr="pages",
+                                      error=get_pages_error(gaps=2),
+                                      checker=is_correct_pages))
+    return book
 
 
 def get_format_string():

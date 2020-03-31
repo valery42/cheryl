@@ -53,7 +53,9 @@ class Handler:
         return True
     
     def handle_add(self):
-        book, title, author = create_book()
+        book = create_book()
+        title = book["title"]
+        author = book["author"]
         self.engine.add_book(book)
         print(f"'{title}' by {author} has been successfully added")
     
