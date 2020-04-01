@@ -74,7 +74,7 @@ class Handler:
         continue_ = self.continue_on_condition(self.engine.books, None,
                                                there_is_nothing_to, "sort")
         if continue_:
-            key = get_from_user(message="by", gaps=1)
+            key = get_from_user(message="sort by key", gaps=1)
             condition = key in SORT_KEYS
             self.continue_on_condition(condition, self.sort_books,
                                        key_must_be_in, SORT_KEYS, key=key)
@@ -101,7 +101,7 @@ class Handler:
 
     def change_book(self, *, index):
         """handle_change helper."""
-        key = get_from_user(message="change attr", gaps=1)
+        key = get_from_user(message="update key", gaps=1)
         condition = key in SORT_KEYS
         continue_ = self.continue_on_condition(condition, None,
                                                 key_must_be_in, SORT_KEYS)
@@ -118,7 +118,7 @@ class Handler:
         continue_ = self.continue_on_condition(self.engine.books, None,
                                                there_is_nothing_to, verb)
         if continue_:
-            key = get_from_user(message="by", gaps=1)
+            key = get_from_user(message="find by key", gaps=1)
             condition = key in FIND_KEYS
             continue_ = self.continue_on_condition(condition, None,
                                                    key_must_be_in, FIND_KEYS)
