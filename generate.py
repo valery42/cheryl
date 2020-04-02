@@ -2,12 +2,13 @@
 
 import argparse
 
+from cheryl.utils import quote
+from cheryl.config import DEFAULT_DATABASE_NAME
 from generator.isbn import get_isbn_list
 from generator.title import get_title_list
 from generator.author import get_author_list
 from generator.publisher import get_publisher_list
 from generator.pages import get_pages_list
-from cheryl.utils import quote
 
 parser = argparse.ArgumentParser()
 parser.add_argument("n", help="number of records to generate", type=int)
@@ -21,7 +22,7 @@ def create_database(n):
     publisher = get_publisher_list(n)
     pages = get_pages_list(n)
 
-    with open("my-books.csv", "wt") as db:
+    with open(DEFAULT_DATABASE_NAME, "wt") as db:
         for record in zip(isbn, title, author, publisher, pages):
             record = [quote(item) for item in record]
             print(",".join(record), file=db)
