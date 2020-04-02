@@ -1,3 +1,5 @@
+"""This module contains a class to test Engine class."""
+
 from cheryl.engine import Engine
 from test.helpers import (
     create_database, delete_database,
@@ -6,6 +8,8 @@ from test.helpers import (
 
 
 class TestEngine:
+    """A class to test Engine class."""
+    
     def test_load_database(self):
         db_name = "test_database"
         create_database(db_name)
