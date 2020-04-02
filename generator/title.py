@@ -41,11 +41,15 @@ THIRD = [
     "Medics", "Sisters", "Brothers", "Firefighters", "Maniacs",
 ]
 
+PARTS = (FIRST, SECOND, THIRD)
+
 
 def get_title_list(n):
     """Generate list of n title values."""
     titles = []
     for _ in range(n):
-        title = choice(FIRST) + " " + choice(SECOND) + " " + choice(THIRD)
-        titles.append(title)
+        title = []
+        for part in PARTS:
+            title.append(choice(part))
+        titles.append(" ".join(title))
     return titles
