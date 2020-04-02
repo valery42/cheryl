@@ -1,8 +1,12 @@
+"""This module contains a class to test heapsort algorithm implementation."""
+
 from cheryl.sort import heapsort
 from test.helpers import get_book, get_books
 
 
 class TestHeapSort:
+    """A class to test heapsort algorithm implementation."""
+    
     def test_empty_list(self):
         books = []
         heapsort(books, key="key")
