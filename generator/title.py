@@ -1,3 +1,5 @@
+"""This module contains title generator."""
+
 from random import choice
 
 FIRST = [
@@ -41,6 +43,7 @@ THIRD = [
 
 
 def get_title_list(n):
+    """Generate list of n title values."""
     titles = []
     for _ in range(n):
         title = choice(FIRST) + " " + choice(SECOND) + " " + choice(THIRD)
