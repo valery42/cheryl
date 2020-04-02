@@ -1,14 +1,14 @@
 from random import choice
 
 NAMES = [
-    # 25 masculine ones
+    # 25 masculine names
     "Alexander", "Andrew", "Arthur", "Ben", "Brad",
     "Carl", "Chance", "Corey", "Damien", "Derek",
     "Doug", "Duncan", "Earl", "Eddie", "Elliot",
     "Eric", "Felix", "Floyd", "Gary", "Grant",
     "Howard", "Jack", "Jerry", "Kevin", "Ronald",
 
-    # 25 feminine ones
+    # 25 feminine names
     "Amy", "Anne", "Astrid", "Betty", "Carol",
     "Cheryl", "Cleo", "Daisy", "Drew", "Effie",
     "Esty", "Faith", "Glenda", "Helen", "Ivy",
@@ -32,5 +32,5 @@ SURNAMES = [
 
 
 def get_author_list(n):
-    result = [choice(NAMES) + " " + choice(SURNAMES) for _ in range(n)]
-    return result
+    author = [choice(NAMES) + " " + choice(SURNAMES) for _ in range(n)]
+    return author
