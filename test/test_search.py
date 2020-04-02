@@ -1,9 +1,13 @@
+"""This module contains a class to test binary search implementation."""
+
 from cheryl.config import UNSUCCESSFUL
 from cheryl.search import binary_search
 from test.helpers import get_book, get_books
 
 
 class TestBinarySearch:
+    """A class to test binary search algorithm implementation."""
+    
     def test_empty_list(self):
         assert binary_search([], key="key", target="target") == UNSUCCESSFUL
     
