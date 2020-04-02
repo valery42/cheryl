@@ -1,6 +1,6 @@
-"""This module is a top level Cheryl script to run the program."""
-
 #!/usr/bin/env python3
+
+"""This module is a top level Cheryl script to run the program."""
 
 import argparse
 
