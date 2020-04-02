@@ -1,3 +1,5 @@
+"""This module is a top level script to create database of n records."""
+
 #!/usr/bin/env python3
 
 import argparse
@@ -16,6 +18,7 @@ args = parser.parse_args()
 
 
 def create_database(n):
+    """Create database of n records."""
     isbn = get_isbn_list(n)
     title = get_title_list(n)
     author = get_author_list(n)
