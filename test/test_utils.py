@@ -1,3 +1,5 @@
+"""This module contains tests for cheryl.utils."""
+
 import io
 from contextlib import redirect_stdout
 
