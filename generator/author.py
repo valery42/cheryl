@@ -1,3 +1,5 @@
+"""This module contains publisher generator."""
+
 from random import choice
 
 NAMES = [
@@ -32,5 +34,6 @@ SURNAMES = [
 
 
 def get_author_list(n):
+    """Generate list of n publisher values."""
     author = [choice(NAMES) + " " + choice(SURNAMES) for _ in range(n)]
     return author
