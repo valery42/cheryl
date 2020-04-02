@@ -1,5 +1,10 @@
 """This module contains constants for entire cheryl package."""
 
+NAME = "Cheryl"
+VERSION = "0.1"
+
+DEFAULT_DATABASE_NAME = "my-books.csv"
+
 UNSUCCESSFUL = -1
 
 MIN_PAGES = 1
@@ -44,6 +49,3 @@ COMMAND_TO_DESCRIPTION = {
     "quit": "Exit program",
     "help": "Print information about commands",
 }
-
-NAME = "Cheryl"
-VERSION = "0.1"
