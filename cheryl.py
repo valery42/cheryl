@@ -1,3 +1,5 @@
+"""This module is a top level Cheryl script to run the program."""
+
 #!/usr/bin/env python3
 
 import argparse
@@ -18,6 +20,9 @@ args.database = args.database or DEFAULT_DATABASE_NAME
 
 
 def main():
+    """Main function.
+    
+    Cheryl program starts here."""
     print(f"{NAME} version {VERSION}")
     print("Enter '.help' for usage hints.")
     engine = Engine(args.database)
