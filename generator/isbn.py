@@ -1,3 +1,5 @@
+"""This module contains isbn generator."""
+
 from itertools import product
 
 from cheryl.config import ISBN_SEP
@@ -8,6 +10,7 @@ ISBN_DEFAULT_VALUE = ("000",)
 
 
 def get_isbn_values(n, first, second, third, *, sep=""):
+    """Generate isbn value."""
     values = []
     for value in product(first, second, third):
         values.append(sep.join(value))
@@ -17,6 +20,7 @@ def get_isbn_values(n, first, second, third, *, sep=""):
 
 
 def get_isbn_list(n):
+    """Generate list of n isbn values."""
     error_msg = f"n must be positive integer less than {ISBN_LIMIT}"
     assert n > 0 and n <= ISBN_LIMIT, error_msg
     if n <= 1_000:
