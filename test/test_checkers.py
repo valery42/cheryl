@@ -1,10 +1,11 @@
-from cheryl.checkers import (
-    is_correct_isbn,
-    is_correct_pages,
-)
+"""This module contains classes to test cheryl.checkers."""
+
+from cheryl.checkers import is_correct_isbn, is_correct_pages
 
 
 class TestIsCorrectISBN:
+    """A class to test isbn checker."""
+
     def test_empty_isbn(self):
         isbn = ""
         assert is_correct_isbn(isbn) == False
@@ -23,6 +24,8 @@ class TestIsCorrectISBN:
 
 
 class TestIsCorrectPages:
+    """A class to test pages checker."""
+
     def test_empty_pages(self):
         pages = ""
         assert is_correct_pages(pages) == False
