@@ -1,6 +1,6 @@
-"""This module is a top level script to create database of n records."""
-
 #!/usr/bin/env python3
+
+"""This module is a top level script to create database of n records."""
 
 import argparse
 
