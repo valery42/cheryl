@@ -1,3 +1,5 @@
+"""This module contains tests for cheryl.converters."""
+
 from cheryl.converters import record_to_book, book_to_record
 from test.helpers import get_record, get_book
 
