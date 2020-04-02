@@ -1,3 +1,5 @@
+"""This module contains various helpers for entire test package."""
+
 import os
 
 from cheryl.converters import record_to_book
