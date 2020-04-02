@@ -4,7 +4,7 @@ import argparse
 
 from cheryl.engine import Engine
 from cheryl.handler import Handler
-from cheryl.config import NAME, VERSION
+from cheryl.config import NAME, VERSION, DEFAULT_DATABASE_NAME
 
 parser = argparse.ArgumentParser(
     description=f"{NAME} is a library information system"
@@ -13,9 +13,8 @@ parser.add_argument(
     "-db", "--database",
     help="database to load records from and store books to"
 )
-
 args = parser.parse_args()
-args.database = args.database or "my-books.csv"
+args.database = args.database or DEFAULT_DATABASE_NAME
 
 
 def main():
