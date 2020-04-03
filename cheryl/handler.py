@@ -104,7 +104,7 @@ class Handler:
         key = get_from_user(message="update key", gaps=1)
         condition = key in SORT_KEYS
         continue_ = self.continue_on_condition(condition, None,
-                                                key_must_be_in, SORT_KEYS)
+                                               key_must_be_in, SORT_KEYS)
         if continue_:
             value = get_from_user(message=f"new {key}", gaps=1, lower=False)
             if self.correct_key_and_target(key, value):
